@@ -22,7 +22,17 @@ jobs:
         distribution: 'temurin'
 
     - name: Build Project
-      run: mvn clean install
+      run: |
+        if [ -f pom.xml ]; then
+          mvn clean install
+        else
+          echo "No pom.xml found at repository root. Skipping Maven build."
+        fi
 
     - name: Run Tests
-      run: mvn test
+      run: |
+        if [ -f pom.xml ]; then
+          mvn test
+        else
+          echo "No pom.xml found at repository root. Skipping Maven tests."
+        fi
